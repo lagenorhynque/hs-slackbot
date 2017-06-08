@@ -15,11 +15,10 @@
   :hooks [leiningen.cljsbuild]
 
   :npm {:dependencies [[express "4.15.3"]
-                       [xmlhttprequest "*"]
-                       [xmldom "0.1.27"]
-                       [source-map-support "*"]
-                       [ws "3.0.0"]]
-        :devDependencies []
+                       [xmlhttprequest "1.8.0"]
+                       [xmldom "0.1.27"]]
+        :devDependencies [[source-map-support "0.4.15"]
+                          [ws "3.0.0"]]
         :package {:scripts
                   {:test "echo \"Error: no test specified\" && exit 1"}}}
 
