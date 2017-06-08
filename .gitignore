@@ -8,3 +8,5 @@
 .lein-plugins/
 figwheel_server.log
 pom.xml
+.nrepl-port
+npm-debug.log

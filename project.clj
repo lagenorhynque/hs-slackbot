@@ -17,7 +17,8 @@
   :npm {:dependencies [[express "4.15.3"]
                        [xmlhttprequest "*"]
                        [xmldom "0.1.27"]
-                       [source-map-support "*"]]
+                       [source-map-support "*"]
+                       [ws "3.0.0"]]
         :devDependencies []
         :package {:scripts
                   {:test "echo \"Error: no test specified\" && exit 1"}}}
@@ -44,4 +45,8 @@
               {:output-to "target/server.js"
                :output-dir "target/server_prod"
                :target :nodejs
-               :optimizations :simple}}]})
+               :optimizations :simple}}]}
+
+  :profiles {:dev {:dependencies [[figwheel-sidecar "0.5.9"]
+                                  [org.clojure/tools.nrepl "0.2.12"]
+                                  [com.cemerick/piggieback "0.2.2-SNAPSHOT"]]}})
