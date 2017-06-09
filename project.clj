@@ -16,6 +16,7 @@
   :hooks [leiningen.cljsbuild]
 
   :npm {:dependencies [[express "4.15.3"]
+                       [xmlhttprequest "1.8.0"]
                        [body-parser "1.17.2"]
                        [winston "2.3.1"]]
         :devDependencies [[source-map-support "0.4.15"]
