@@ -7,9 +7,8 @@ ADD . /opt/
 WORKDIR /opt/
 
 RUN curl -sSL https://get.haskellstack.org/ | sh && \
-    stack config set system-ghc --global true && \
-    stack ghci
+    stack ghci --system-ghc
 
 RUN lein deps && lein cljsbuild once
 
-CMD node target/server.js
+CMD node --optimize_for_size --max_old_space_size=460 --gc_interval=100 target/server.js

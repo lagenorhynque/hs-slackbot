@@ -2,8 +2,9 @@
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [cljs.nodejs :as nodejs]
             [clojure.string :as str]
-            [cljs.core.async :refer [<!]]
-            [cljs-http.client :as http]))
+            [cljs.core.async :refer [<! put! chan]]
+            [cljs-http.client :as http]
+            [hs-slackbot.ghci :as ghci]))
 
 (nodejs/enable-util-print!)
 
@@ -11,8 +12,8 @@
 (defonce body-parser (nodejs/require "body-parser"))
 (defonce winston (nodejs/require "winston"))
 
-(.remove winston winston.transports.Console)
-(.add winston winston.transports.Console #js {:timestamp true})
+(winston.remove winston.transports.Console)
+(winston.add winston.transports.Console #js {:timestamp true})
 
 (set! js/XMLHttpRequest (.-XMLHttpRequest
                          (nodejs/require "xmlhttprequest")))
@@ -25,30 +26,36 @@
 (def command-token
   (.-COMMAND_TOKEN (.-env js/process)))
 
-(defn eval-expr [s]
-  ;; TODO
-  s)
+(def ghci (ghci/new-ghci (atom {})))
 
-(defn format-result [r user]
+(defn eval-expr [expr]
+  (let [result-ch (chan)]
+    (ghci/eval-with-ghci ghci expr #(put! result-ch %))
+    [expr result-ch]))
+
+(defn format-result [expr result user]
   (str/join "\n"
             ["```"
              (str "-- " user)
-             r
+             (->> (str/split-lines expr)
+                  (map #(str "GHCi> " %))
+                  (str/join "\n"))
+             result
              "```"]))
 
-(defn post-to-slack [s channel]
+(defn post-to-slack [[expr result-ch] channel user]
   (let [p (if channel {:channel channel} {})]
     (go
-      (let [res (<! (http/post post-url
-                               {:json-params (assoc p :text s)}))]
-        (.info winston "Slack Incoming WebHook response"
+      (let [text (format-result expr (<! result-ch) user)
+            res (<! (http/post post-url
+                               {:json-params (assoc p :text text)}))]
+        (winston.info "Slack Incoming WebHook response"
                "[status]" (:status res) "[body]" (:body res))))))
 
 (defn eval-and-post [s user channel]
   (-> s
       eval-expr
-      (format-result user)
-      (post-to-slack channel)))
+      (post-to-slack channel user)))
 
 (defn handle-hs [req res]
   (let [body (js->clj (.-body req))]

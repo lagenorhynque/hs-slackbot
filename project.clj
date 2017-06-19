@@ -7,7 +7,8 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.229"]
                  [org.clojure/core.async  "0.3.442"]
-                 [cljs-http/cljs-http "0.1.43"]]
+                 [cljs-http/cljs-http "0.1.43"]
+                 [com.stuartsierra/component "0.3.2"]]
 
   :plugins [[lein-cljsbuild "1.1.5" :exclusions [[org.clojure/clojure]]]
             [lein-npm "0.6.2"]
