@@ -1,0 +1,13 @@
+{
+    "name": "hs-slackbot",
+    "description": "A Haskell chat bot that is easy to integrate with slack.",
+    "keywords": ["haskell", "slack", "chat", "bot"],
+    "env": {
+        "COMMAND_TOKEN": {
+            "description": "The token for your slash command hook."
+        },
+        "POST_URL": {
+            "description": "The URL to post stuff to slack (an incoming web-hook)."
+        }
+    }
+}
