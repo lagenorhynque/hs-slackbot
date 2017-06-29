@@ -9,8 +9,8 @@
 (winston.remove winston.transports.Console)
 (winston.add winston.transports.Console #js {:timestamp true})
 
-(def exec-cmd "stack")
-(def exec-args #js ["ghci" "--system-ghc"])
+(def exec-cmd "ghci")
+(def exec-args #js [])
 (def initial-cmds [":set +t"
                    ":set prompt \"GHCi> \""
                    ":set prompt2 \"\""])

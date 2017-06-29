@@ -6,8 +6,10 @@ RUN apk update && \
 ADD . /opt/
 WORKDIR /opt/
 
-RUN curl -sSL https://get.haskellstack.org/ | sh && \
-    stack ghci --system-ghc
+# TODO: introduce stack
+# RUN curl -sSL https://get.haskellstack.org/ | sh && \
+#     stack setup && \
+#     stack ghci
 
 RUN lein deps && lein cljsbuild once
 
