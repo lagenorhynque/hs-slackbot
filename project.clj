@@ -4,22 +4,22 @@
 
   :min-lein-version "2.7.1"
 
-  :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.229"]
-                 [org.clojure/core.async  "0.3.442"]
-                 [cljs-http/cljs-http "0.1.43"]
-                 [com.stuartsierra/component "0.3.2"]]
+  :dependencies [[cljs-http/cljs-http "0.1.46"]
+                 [com.stuartsierra/component "0.4.0"]
+                 [org.clojure/clojure "1.10.0"]
+                 [org.clojure/clojurescript "1.10.520"]
+                 [org.clojure/core.async  "0.4.490"]]
 
-  :plugins [[lein-cljsbuild "1.1.5" :exclusions [[org.clojure/clojure]]]
-            [lein-npm "0.6.2"]
-            [lein-figwheel "0.5.10"]]
+  :plugins [[lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]
+            [lein-figwheel "0.5.18"]
+            [lein-npm "0.6.2"]]
 
   :hooks [leiningen.cljsbuild]
 
-  :npm {:dependencies [[express "4.15.3"]
-                       [xmlhttprequest "1.8.0"]
-                       [body-parser "1.17.2"]
-                       [winston "2.3.1"]]
+  :npm {:dependencies [[body-parser "1.17.2"]
+                       [express "4.15.3"]
+                       [winston "2.3.1"]
+                       [xmlhttprequest "1.8.0"]]
         :devDependencies [[source-map-support "0.4.15"]
                           [ws "3.0.0"]]
         :package {:scripts
@@ -29,26 +29,25 @@
 
   :clean-targets ["target"]
 
-  :cljsbuild {
-    :builds [{:id "dev"
-              :source-paths ["src"]
-              :figwheel true
-              :compiler
-              {:main hs-slackbot.core
-               :asset-path "target/server_dev"
-               :output-to "target/server_dev/hs_slackbot.js"
-               :output-dir "target/server_dev"
-               :target :nodejs
-               :optimizations :none
-               :source-map true}}
-             {:id "prod"
-              :source-paths ["src"]
-              :compiler
-              {:output-to "target/server.js"
-               :output-dir "target/server_prod"
-               :target :nodejs
-               :optimizations :simple}}]}
+  :cljsbuild {:builds [{:id "dev"
+                        :source-paths ["src"]
+                        :figwheel true
+                        :compiler
+                        {:main hs-slackbot.core
+                         :asset-path "target/server_dev"
+                         :output-to "target/server_dev/hs_slackbot.js"
+                         :output-dir "target/server_dev"
+                         :target :nodejs
+                         :optimizations :none
+                         :source-map true}}
+                       {:id "prod"
+                        :source-paths ["src"]
+                        :compiler
+                        {:output-to "target/server.js"
+                         :output-dir "target/server_prod"
+                         :target :nodejs
+                         :optimizations :simple}}]}
 
-  :profiles {:dev {:dependencies [[figwheel-sidecar "0.5.9"]
-                                  [org.clojure/tools.nrepl "0.2.12"]
-                                  [com.cemerick/piggieback "0.2.2-SNAPSHOT"]]}})
+  :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.2"]
+                                  [figwheel-sidecar "0.5.18"]
+                                  [org.clojure/tools.nrepl "0.2.13"]]}})
