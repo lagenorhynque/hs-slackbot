@@ -16,12 +16,12 @@
 
   :hooks [leiningen.cljsbuild]
 
-  :npm {:dependencies [[body-parser "1.17.2"]
-                       [express "4.15.3"]
-                       [winston "2.3.1"]
+  :npm {:dependencies [[body-parser "1.19.0"]
+                       [express "4.17.0"]
+                       [winston "3.2.1"]
                        [xmlhttprequest "1.8.0"]]
-        :devDependencies [[source-map-support "0.4.15"]
-                          [ws "3.0.0"]]
+        :devDependencies [[source-map-support "0.5.12"]
+                          [ws "7.0.0"]]
         :package {:scripts
                   {:test "echo \"Error: no test specified\" && exit 1"}}}
 
